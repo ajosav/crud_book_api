@@ -2,9 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Filters\Book\Order;
+use App\Filters\Book\Title;
+use App\Filters\Book\CreatedAt;
+use App\Filters\Book\CreatedBy;
+use Illuminate\Pipeline\Pipeline;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Book extends Model
 {
@@ -38,5 +43,19 @@ class Book extends Model
             'creation_date' => $this->created_at->format('Y-m-d H:i:s'),
             'created_by' => $this->user->email
         ];
+    }
+
+    public static function getFilteredBooks() {
+        return app(Pipeline::class)
+                ->send(self::query())
+                ->through([
+                    CreatedAt::class,
+                    Order::class,
+                    CreatedBy::class,
+                    Order::class,
+                    Title::class
+                ])
+                ->thenReturn()
+                ->get();
     }
 }
