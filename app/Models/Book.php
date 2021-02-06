@@ -56,6 +56,7 @@ class Book extends Model
                     Title::class
                 ])
                 ->thenReturn()
+                ->with('user')
                 ->get();
     }
 }
