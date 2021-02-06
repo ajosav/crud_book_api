@@ -16,7 +16,7 @@ class AuthController extends Controller
         $this->user = $user;
     }
 
-    public function create(UserCreateRequest $request) {
+    public function store(UserCreateRequest $request) {
         
         return $this->user->newUserAndToken($request->validated());
     }
