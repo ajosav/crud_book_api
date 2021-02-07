@@ -1,62 +1,166 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# CRUD BOOK API
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+CRUD book API is a task assigned to me by AFTJDIGITAL as a second level of the screening process. The API has the following features
 
-## About Laravel
+- Register a user
+- Login a user
+- A user can add a book to a database
+- Get all books from a database
+- Get a single book from a database
+- Delete a book from a database
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### API Endpoints
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Register a user
+> `POST` <https://{domain}/api/v1/users/create>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+	##### Payload
+		{
+			"first_name" : "micheal",
+			"last_name" : "smith",
+			"email" : "example@example.com",
+			"password_confirmation" : "secret@_Password",
+			"password" : "secret@_Password"
+		}
+	##### Response
+		{
+			  "status": "success",
+			  "message": "User Account Successfully created",
+			  "data": {
+				"first_name": "micheal",
+				"last_name": "smith",
+				"email": "example@example.com",
+				"_token": "1|5bfPsdWcztwVSOksyyKcyklaCobhiezUHecU5X0K"
+		  	}
+		}
+----
+- Login a user
+> `POST` <https://{domain}/api/v1/users/login>
 
-## Learning Laravel
+	##### Payload
+		{
+			"email" : "example@example.com",
+			"password" : "secret@_Password",
+		}
+	##### Response
+		{
+			  "status": "success",
+			  "message": "User Successfully Authenticated",
+			  "data": {
+				"first_name": "michael",
+				"last_name": "smith",
+				"email": "example@example.com",
+				"_token": "1|5bfPsdWcztwVSOksyyKcyklaCobhiezUHecU5X0K"
+			  }
+		}
+----
+- Create a book
+> `POST` <https://{domain}/api/v1/books>
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+	###### `Headers: Bearer 1|5bfPsdWcztwVSOksyyKcyklaCobhiezUHecU5X0K`
+	##### Payload
+		{
+			"title" : "The Key to Success",
+			"author" : "Bola Akintomide",
+			"description" : "An inspirational book ..."
+		}
+	##### Response
+		{
+			  "status": "success",
+			  "message": "Book creation was successful",
+			  "data": {
+				"id": "4dd9555fbeffd727805d77a9b33c14d2",
+				"title": "The Key to Success",
+				"author": "Bola Akintomide",
+				"description": "An inspirational book ...",
+				"creation_date": "2021-02-06 23:05:21",
+				"created_by": "example@example.com"
+			  }
+		}
+----
+- Retrieve all books
+> `GET` <https://{domain}/api/v1/books>
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+	###### `Headers: Bearer 1|5bfPsdWcztwVSOksyyKcyklaCobhiezUHecU5X0K`
+	###### Optional Filters
+			?created_by=example@example.com
+			&order=asc
+			&title=Give%20me%20
+			&created_at=2021-02-06`
+	##### Response
+		{
+			  "status": "success",
+			  "message": "Books retrieved successfully",
+			  "data": [
+				{
+				  "id": "ba080edcd4d7287c91506fe303b119ca",
+				  "title": "The Key to Success",
+				  "author": "Bola Akintomide",
+				  "description": "An inspirational book ...",
+				  "creation_date": "2021-02-06 23:05:06",
+				  "created_by": "example@example.com"
+				},
+				{
+				  "id": "4dd9555fbeffd727805d77a9b33c14d2",
+				  "title": "Give me the key",
+				  "author": "Roland Great",
+                  "description": "",
+				  "creation_date": "2021-02-06 23:05:21",
+				  "created_by": "mailuser@example.com"
+				}
+			  ]
+		}
+----
+- Find a book
+> `GET` <https://{domain}/api/v1/books/{id}>
 
-## Laravel Sponsors
+	###### `Headers: Bearer 1|5bfPsdWcztwVSOksyyKcyklaCobhiezUHecU5X0K`
+	##### Response
+		{
+			  "status": "success",
+			  "message": "Found a book with your id",
+			  "data": {
+				"id": "ba080edcd4d7287c91506fe303b119ca",
+				"title": "The Key to Success",
+				"author": "Bola Akintomide",
+				"description": "An inspirational book ...",
+				"creation_date": "2021-02-06 23:05:06",
+				"created_by": "example@example.com"
+			  }
+		}
+----
+- Delete a book
+> `DELETE` <https://{domain}/api/v1/books/{id}>
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+	###### `Headers: Bearer 1|5bfPsdWcztwVSOksyyKcyklaCobhiezUHecU5X0K`
+	##### Response
+		{
+		  "status": "success",
+		  "message": "Book deleted successfully",
+		  "data": {}
+		}
+----
+- Update a book
+> `PATCH` <https://{domain}/api/v1/books/{id}>
 
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+	###### `Headers: Bearer 1|5bfPsdWcztwVSOksyyKcyklaCobhiezUHecU5X0K`
+	##### Payload
+		{
+			"title" : "The Key to Greatness",
+			"author" : "Bola Akintomide",
+			"description" : "An inspirational book ..."
+		}
+	##### Response
+		{
+			  "status": "success",
+			  "message": "Book update was successful",
+			  "data": {
+					"id": "ba080edcd4d7287c91506fe303b119ca",
+					"title": "The Key to Greatness",
+					"author": "Bola Akintomide",
+					"description": "An inspirational book ...",
+					"creation_date": "2021-02-06 23:05:06",
+					"created_by": "example@example.com"
+			  }
+		}
+----

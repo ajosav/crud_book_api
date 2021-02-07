@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Facades\BookFacade;
+use App\Models\Book;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\UpdateBookRequest;
+use App\Http\Requests\BookCreationRequest;
 
 class BooksController extends Controller
 {
@@ -18,62 +21,37 @@ class BooksController extends Controller
      */
     public function index()
     {
-        return "Books Here";
+        return BookFacade::retrieveAll();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function store(BookCreationRequest $request)
     {
-        //
+        return BookFacade::createBook($request->validated());
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
+     * retrieve the specified resource in storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Book $book)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return response()->success("Found a book with your id", $book->format());
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  model $book
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+
+    public function update(UpdateBookRequest $request,  Book $book)
     {
-        //
+        $new_book = $request->validated();
+        return BookFacade::updateBook($new_book, $book);
     }
 
     /**
@@ -82,8 +60,8 @@ class BooksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Book $book)
     {
-        //
+        return BookFacade::deleteBook($book);
     }
 }
