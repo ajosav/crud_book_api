@@ -13,6 +13,7 @@ CRUD book API is a task assigned to me by AFTJDIGITAL as a second level of the s
 
 - Register a user
 > `POST` <https://{domain}/api/v1/users/create>
+
 	##### Payload
 		{
 			"first_name" : "micheal",
@@ -35,6 +36,7 @@ CRUD book API is a task assigned to me by AFTJDIGITAL as a second level of the s
 ----
 - Login a user
 > `POST` <https://{domain}/api/v1/users/login>
+
 	##### Payload
 		{
 			"email" : "example@example.com",
@@ -54,6 +56,7 @@ CRUD book API is a task assigned to me by AFTJDIGITAL as a second level of the s
 ----
 - Create a book
 > `POST` <https://{domain}/api/v1/books>
+
 	###### `Headers: Bearer 1|5bfPsdWcztwVSOksyyKcyklaCobhiezUHecU5X0K`
 	##### Payload
 		{
@@ -77,6 +80,7 @@ CRUD book API is a task assigned to me by AFTJDIGITAL as a second level of the s
 ----
 - Retrieve all books
 > `GET` <https://{domain}/api/v1/books>
+
 	###### `Headers: Bearer 1|5bfPsdWcztwVSOksyyKcyklaCobhiezUHecU5X0K`
 	###### Optional Filters
 			?created_by=example@example.com
@@ -109,6 +113,7 @@ CRUD book API is a task assigned to me by AFTJDIGITAL as a second level of the s
 ----
 - Find a book
 > `GET` <https://{domain}/api/v1/books/{id}>
+
 	###### `Headers: Bearer 1|5bfPsdWcztwVSOksyyKcyklaCobhiezUHecU5X0K`
 	##### Response
 		{
@@ -126,6 +131,7 @@ CRUD book API is a task assigned to me by AFTJDIGITAL as a second level of the s
 ----
 - Delete a book
 > `DELETE` <https://{domain}/api/v1/books/{id}>
+
 	###### `Headers: Bearer 1|5bfPsdWcztwVSOksyyKcyklaCobhiezUHecU5X0K`
 	##### Response
 		{
@@ -136,6 +142,7 @@ CRUD book API is a task assigned to me by AFTJDIGITAL as a second level of the s
 ----
 - Update a book
 > `PATCH` <https://{domain}/api/v1/books/{id}>
+
 	###### `Headers: Bearer 1|5bfPsdWcztwVSOksyyKcyklaCobhiezUHecU5X0K`
 	##### Payload
 		{
