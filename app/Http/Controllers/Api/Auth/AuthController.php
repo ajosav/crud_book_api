@@ -17,12 +17,12 @@ class AuthController extends Controller
     }
 
     public function store(UserCreateRequest $request) {
-        
         return $this->user->newUserAndToken($request->validated());
     }
 
     public function login(LoginRequest $request) {
         $request->authenticate();
-        return $this->user->createToken($request->user());
+        $user_with_token = $this->user->createToken($request->user());
+        return response()->success("User Successfully Authenticated", $user_with_token);
     }
 }

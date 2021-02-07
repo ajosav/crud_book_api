@@ -4,9 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Facades\BookFacade;
 use App\Models\Book;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Database\QueryException;
 use App\Http\Requests\UpdateBookRequest;
 use App\Http\Requests\BookCreationRequest;
 
