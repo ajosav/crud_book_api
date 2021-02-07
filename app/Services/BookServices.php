@@ -9,7 +9,9 @@ use Illuminate\Database\QueryException;
 class BookServices {
 
     public function retrieveAll() {
-        $books = Book::all()->map->format();
+        $books = Book::getFilteredBooks()->map->format();
+        
+        // Book::all()->load('user');
         return response()->success("Books retrieved successfully", $books);
     }
 
@@ -23,7 +25,7 @@ class BookServices {
                 return response()->errorResponse("Book could not be created");
             }
 
-            return response()->success("Book creation was successful", $book->format());
+            return response()->success("Book creation was successful", $book->load('user')->format());
 
         } catch(QueryException $e) {
             return response()->errorResponse($e->getMessage());
@@ -48,7 +50,7 @@ class BookServices {
                 return response()->errorResponse("Book could not be updated");
             }
 
-            return response()->success("Book update was successful", $bookInstance->format());
+            return response()->success("Book update was successful", $bookInstance->load('user')->format());
 
         } catch(QueryException $e) {
             return response()->errorResponse($e->getMessage());
