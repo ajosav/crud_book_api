@@ -32,7 +32,7 @@ class UpdateBookRequest extends FormRequest
         
         $book = $this->route('book');
         return [
-            "title" => 'nullable|string|max:255|unique:books,title,'.$book->uuid,
+            "title" => 'nullable|string|max:255|unique:books,title,'.$book->id,
             "author" => 'nullable|string|max:255',
             "description" => 'nullable|string'
         ];
